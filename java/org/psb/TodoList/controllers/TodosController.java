@@ -5,11 +5,13 @@ import java.util.List;
 import org.psb.TodoList.models.ToDo;
 import org.psb.TodoList.services.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -32,6 +34,7 @@ public class TodosController {
 
     // create a todo
     @RequestMapping(value = "/todos", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody String createTodoById(@RequestBody ToDo todoData) {
 	
 	int rowCreated = todoService.createNewTodo(todoData);
@@ -42,8 +45,9 @@ public class TodosController {
     }
 
     // update a todo
+    @ResponseStatus(HttpStatus.)
     @RequestMapping(value = "/todos/{id}", method = RequestMethod.PATCH)
-    public @ResponseBody int patchTodoById(@PathVariable Integer id, @RequestBody ToDo updatedTodoData) {
+    public @ResponseBody int patchTodoById(@PathVariable Integer id, @RequestBody ToDo updatedTodoData) {	
 	return todoService.updateTodo( id, updatedTodoData);
     }
 
