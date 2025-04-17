@@ -1,0 +1,20 @@
+Pre-requsites:
+1. SQLite nneds to 
+
+My RESTful API
+http://localhost:8080/todos
+
+Actuator
+http://localhost:8080/actuator/health
+
+To Manually add new todos call 
+curl -i -v POST http://localhost:8080/todos -H "Content-Type: application/json" -d '{ "description": "Buy salt", "completionStatus": "Process Initiated" }'
+
+curl -i -v POST http://localhost:8080/todos -H "Content-Type: application/json" -d '{ "description": "Buy Sugar", "completionStatus": "Purchased" }'
+
+Update existing post  
+curl -i -v -X PATCH http://localhost:8080/todos/1 -H "Content-Type: application/json" -d '{ "description": "Buy Sea Salt", "completionStatus": "Lena Purchased" }'
+
+Delete unused resource
+curl -i -v -X DELETE http://localhost:8080/todos/3 -H "Content-Type: application/json"
+

@@ -1,0 +1,19 @@
+I've run POST twice using curl command.
+
+Then I've issued read all todos
+[
+  {
+    "id": 1,
+    "description": "Buy salt",
+    "completionStatus": "Process Initiated"
+  },
+  {
+    "id": 2,
+    "description": "Buy Sugar",
+    "completionStatus": "Purchased"
+  }
+]
+
+I called UPDATE via curl. 
+It changed a values of 1st
+ 

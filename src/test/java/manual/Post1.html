@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>JSON POST new Todo</title>
+</head>
+<body>
+  <script>
+    // same fetch code as above
+    fetch('http://localhost:8080/todos', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ description: 'Buy sugar', completionStatus: 'Purchased' })
+    })
+    .then(r => r.json())
+    .then(console.log)
+    .catch(console.error);
+  </script>
+</body>
+</html>
