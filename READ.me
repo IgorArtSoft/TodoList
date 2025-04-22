@@ -15,7 +15,7 @@ Update existing todo
 curl -i -v -X PATCH http://localhost:8080/todos/6 -H "Content-Type: application/json" -d '{ "description": "Buy Himalayan Salt instead of Milk", "completionStatus": "Wife Purchased" }'
 
 Delete non-existent resource with id = 3. It should return http code 400
-curl -i -v -X DELETE http://localhost:8080/todos/3 -H "Content-Type: application/json"
+curl -i -v -X DELETE http://localhost:8080/todos/88 -H "Content-Type: application/json"
 
-curl -i -v -X DELETE http://localhost:8080/todos/4 -H "Content-Type: application/json"
+curl -i -v -X DELETE http://localhost:8080/todos/7 -H "Content-Type: application/json"
 

@@ -1,14 +1,12 @@
 package org.psb.TodoList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.math.BigDecimal;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -22,9 +20,8 @@ import org.psb.TodoList.repositories.TodoListRepository;
 import org.psb.TodoList.services.TodoService;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.web.server.ResponseStatusException;
 
-@SpringBootTest
+// @SpringBootTest
 @WebMvcTest(TodosController.class)
 class TodoListApplicationTests {
 
@@ -51,7 +48,7 @@ class TodoListApplicationTests {
     void findById_whenExists_returnsToDo() {
         when(repo.findTodoById(1)).thenReturn(Optional.of(existing));
         ToDo p = svc.getTodoById(1);
-        assertEquals( "Pen", p.getDescription() );
+        assertEquals( "Description 1", p.getDescription() );
     }
 
     @Test
@@ -82,13 +79,12 @@ class TodoListApplicationTests {
 
     @Test
     void update_whenExists_updatesFields() {
-        ToDo update = new ToDo( null, "Pen", "Black ink" );
+        ToDo update = new ToDo( null, "Description 1", "Initial" );
         when( repo.findTodoById(1) ).thenReturn(Optional.of(existing));
         when( repo.save( any() ) ).thenAnswer(i -> i.getArgument(0));
 
         ToDo result = svc.updateTodo(1, update);
-        assertEquals("Black ink", result.getDescription());
-        // assertEquals(new BigDecimal("1.50"), result.getPrice() );
+        assertEquals("Initial", result.getDescription());
     }
     
 }
