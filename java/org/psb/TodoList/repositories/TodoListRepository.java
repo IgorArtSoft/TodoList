@@ -69,9 +69,9 @@ public class TodoListRepository {
     }
 
     public ToDo updateTodo(Integer id, ToDo todoData) {
-//	System.out.printf( "\033[0;32m" );
-//	System.out.printf( "Description: %-30s CompletionStatus: %-30s  Id: %-30d\n", todoData.getDescription(), todoData.getCompletionStatus(), id  );
-//	System.out.printf( "\u001B[0m" );
+	System.out.printf( "\033[0;32m" );
+	System.out.printf( "Description: %-30s CompletionStatus: %-30s  Id: %-30d\n", todoData.getDescription(), todoData.getCompletionStatus(), id  );
+	System.out.printf( "\u001B[0m" );
 
         Optional<ToDo> retrieveUpdatedRow = Optional.empty();
 
