@@ -1,5 +1,6 @@
 Pre-requsites:
-1. SQLite nneds to 
+1. Start SQLite server.
+sqlite3 d:/data/myapp.sqlite 
 
 My RESTful API
 http://localhost:8080/todos
@@ -7,14 +8,14 @@ http://localhost:8080/todos
 Actuator
 http://localhost:8080/actuator/health
 
-To Manually add new todos call 
-curl -i -v POST http://localhost:8080/todos -H "Content-Type: application/json" -d '{ "description": "Buy salt", "completionStatus": "Process Initiated" }'
+To add new todo 
+curl -i -v POST http://localhost:8080/todos -H "Content-Type: application/json" -d '{ "description": "Buy Bread", "completionStatus": "Process Initiated" }'
 
-curl -i -v POST http://localhost:8080/todos -H "Content-Type: application/json" -d '{ "description": "Buy Sugar", "completionStatus": "Purchased" }'
+Update existing todo  
+curl -i -v -X PATCH http://localhost:8080/todos/6 -H "Content-Type: application/json" -d '{ "description": "Buy Himalayan Salt instead of Milk", "completionStatus": "Wife Purchased" }'
 
-Update existing post  
-curl -i -v -X PATCH http://localhost:8080/todos/1 -H "Content-Type: application/json" -d '{ "description": "Buy Sea Salt", "completionStatus": "Lena Purchased" }'
-
-Delete unused resource
+Delete non-existent resource with id = 3. It should return http code 400
 curl -i -v -X DELETE http://localhost:8080/todos/3 -H "Content-Type: application/json"
+
+curl -i -v -X DELETE http://localhost:8080/todos/4 -H "Content-Type: application/json"
 
