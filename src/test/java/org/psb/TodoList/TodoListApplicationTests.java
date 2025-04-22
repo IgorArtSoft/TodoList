@@ -79,7 +79,7 @@ class TodoListApplicationTests {
 
     @Test
     void update_whenExists_updatesFields() {
-        ToDo update = new ToDo( null, "Description 1", "Initial" );
+        ToDo update = new ToDo( 1, "Description 1", "Initial" );
         when( repo.findTodoById(1) ).thenReturn(Optional.of(existing));
         when( repo.save( any() ) ).thenAnswer(i -> i.getArgument(0));
 
