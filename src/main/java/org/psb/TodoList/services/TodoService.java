@@ -39,8 +39,7 @@ public class TodoService {
     }
 
     /**
-     * @param todoData is a Data Transfer Object (DTO). It contains all information
-     *                 except id
+     * @param todoData is a Data Transfer Object (DTO). It contains all information except id
      * @return 1 if the resource was created. 0 if it was not
      */
     public ToDo createNewTodo(ToDo todoData) {        

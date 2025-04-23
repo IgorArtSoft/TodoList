@@ -94,5 +94,9 @@ public class TodoListRepository {
     public Object save(ToDo toCreate) {
         return null;
     }
+
+    public void deleteAll() {
+        jdbc.update( "DELETE FROM todos");
+    }
     
 }

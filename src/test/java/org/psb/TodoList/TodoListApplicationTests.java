@@ -21,8 +21,8 @@ import org.psb.TodoList.services.TodoService;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-// @WebMvcTest(TodosController.class)
+// @SpringBootTest
+@WebMvcTest(TodosController.class)
 class TodoListApplicationTests {
 
     private static final int NON_EXISTENT_ID = 99;

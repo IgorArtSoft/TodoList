@@ -12,7 +12,7 @@ To add new todo
 curl -i -v POST http://localhost:8080/todos -H "Content-Type: application/json" -d '{ "description": "Buy Bread", "completionStatus": "Process Initiated" }'
 
 Update existing todo  
-curl -i -v -X PATCH http://localhost:8080/todos/6 -H "Content-Type: application/json" -d '{ "description": "Buy Himalayan Salt instead of Milk", "completionStatus": "Wife Purchased" }'
+curl -i -v -X PATCH http://localhost:8080/todos/6 -H "Content-Type: application/json" -d '{ "description": "Buy Himalayan Salt instead of Coconut Milk", "completionStatus": "Wife is going to Purchase" }'
 
 Delete non-existent resource with id = 3. It should return http code 400
 curl -i -v -X DELETE http://localhost:8080/todos/88 -H "Content-Type: application/json"
