@@ -1,30 +1,26 @@
-package org.psb.TodoList;
+package com.example.crud;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.net.URI;
-import java.util.List;
-
+import com.example.crud.model.Todo;
+import com.example.crud.repository.TodoRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 
-import org.psb.TodoList.models.ToDo;
-import org.psb.TodoList.repositories.TodoListRepository;
+import java.net.URI;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(
-    webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-    properties = "spring.config.name=application-test"
-)
-class ToDoIntegrationTest {
+        classes = CrudApplication.class,                     // ← specify your main class
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+        properties = "spring.config.name=application-test"
+      )
+class TodoIntegrationTest {
 
     @LocalServerPort
     private int port;
@@ -33,10 +29,10 @@ class ToDoIntegrationTest {
     private TestRestTemplate restTemplate;
 
     @Autowired
-    private TodoListRepository repository;
+    private TodoRepository repository;
 
     private String baseUrl() {
-        return "http://localhost:" + port + "/todos";
+        return "http://localhost:" + port + "/api/todos";
     }
 
     @BeforeEach
@@ -46,51 +42,49 @@ class ToDoIntegrationTest {
 
     @Test
     void testCreateReadUpdateDelete() {
-        
         // --- CREATE
-        ToDo newToDo = new ToDo( null, "Write tests", "Integration test for CRUD" );
-        ResponseEntity<ToDo> createResponse = restTemplate.postForEntity(
+        Todo newTodo = new Todo("Write tests", "Integration test for CRUD", false);
+        ResponseEntity<Todo> createResponse = restTemplate.postForEntity(
             URI.create(baseUrl()),
-            newToDo,
-            ToDo.class
+            newTodo,
+            Todo.class
         );
-        
         assertThat(createResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-        ToDo created = createResponse.getBody();
+        Todo created = createResponse.getBody();
         assert created != null;
         assertThat(created.getId()).isPositive();
-        assertThat(created.getDescription()).isEqualTo("Write tests");
+        assertThat(created.getTitle()).isEqualTo("Write tests");
 
-        Integer id = created.getId();
+        Long id = created.getId();
 
         // --- READ ALL
-        ResponseEntity<ToDo[]> listResponse = restTemplate.getForEntity(
-            baseUrl(), ToDo[].class
+        ResponseEntity<Todo[]> listResponse = restTemplate.getForEntity(
+            baseUrl(), Todo[].class
         );
         assertThat(listResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-        ToDo[] ToDos = listResponse.getBody();
-        assertThat(ToDos).hasSize(1);
+        Todo[] todos = listResponse.getBody();
+        assertThat(todos).hasSize(1);
 
         // --- READ ONE
-        ResponseEntity<ToDo> getResponse = restTemplate.getForEntity(
-            baseUrl() + "/" + id, ToDo.class
+        ResponseEntity<Todo> getResponse = restTemplate.getForEntity(
+            baseUrl() + "/" + id, Todo.class
         );
         assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(getResponse.getBody().getDescription())
             .isEqualTo("Integration test for CRUD");
 
         // --- UPDATE
-        ToDo updated = new ToDo( id, "Write more tests", "Include edge cases" );
-        HttpEntity<ToDo> updateReq = new HttpEntity<>(updated);
-        ResponseEntity<ToDo> updateResponse = restTemplate.exchange(
+        Todo updated = new Todo("Write more tests", "Include edge cases", true);
+        HttpEntity<Todo> updateReq = new HttpEntity<>(updated);
+        ResponseEntity<Todo> updateResponse = restTemplate.exchange(
             baseUrl() + "/" + id,
             HttpMethod.PUT,
             updateReq,
-            ToDo.class
+            Todo.class
         );
         assertThat(updateResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-        // assertThat(updateResponse.getBody().getCompletionStatus()).isTrue();
-        assertThat(updateResponse.getBody().getDescription())
+        assertThat(updateResponse.getBody().isCompleted()).isTrue();
+        assertThat(updateResponse.getBody().getTitle())
             .isEqualTo("Write more tests");
 
         // --- DELETE
@@ -102,8 +96,7 @@ class ToDoIntegrationTest {
         );
         assertThat(deleteResponse.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
         // verify gone
-        List<ToDo> remaining = repository.getAllTodos();
+        List<Todo> remaining = repository.findAll();
         assertThat(remaining).isEmpty();
     }
-    
 }

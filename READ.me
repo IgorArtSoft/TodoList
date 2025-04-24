@@ -8,6 +8,21 @@ http://localhost:8080/todos
 Actuator
 http://localhost:8080/actuator/health
 
+
+curl -i -v -X POST localhost:8080/api/todos \
+     -H 'Content-Type: application/json' \
+     -d '{"title":"Buy milk","description":"2 liters","completed":false}'
+	 
+curl  -i -v -X PUT http://localhost:8080/api/todos/1 \
+     -H "Content-Type: application/json" \
+	 -d '{"title": "Buy Himalayan Salt","description":"1 kg","completed":true}'
+
+curl -i -v -X POST localhost:8080/api/todos \
+     -H 'Content-Type: application/json' \
+     -d '{"title":"Buy sour cream","description":"0.5 liters","completed":true}'
+     
+     
+Old requests
 To add new todo 
 curl -i -v POST http://localhost:8080/todos -H "Content-Type: application/json" -d '{ "description": "Buy Bread", "completionStatus": "Process Initiated" }'
 
@@ -18,4 +33,6 @@ Delete non-existent resource with id = 3. It should return http code 400
 curl -i -v -X DELETE http://localhost:8080/todos/88 -H "Content-Type: application/json"
 
 curl -i -v -X DELETE http://localhost:8080/todos/7 -H "Content-Type: application/json"
+
+
 
