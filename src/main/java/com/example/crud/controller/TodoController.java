@@ -21,7 +21,7 @@ public class TodoController {
     }
 
     @GetMapping("/{id}")
-    public Todo get(@PathVariable Long id) {
+    public Todo get(@PathVariable Integer id) {
         return service.findById(id);
     }
 
@@ -34,12 +34,12 @@ public class TodoController {
     }
 
     @PutMapping("/{id}")
-    public Todo update(@PathVariable Long id, @RequestBody Todo todo) {
+    public Todo update(@PathVariable Integer id, @RequestBody Todo todo) {
         return service.update(id, todo);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

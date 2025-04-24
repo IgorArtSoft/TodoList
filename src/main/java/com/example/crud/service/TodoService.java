@@ -17,7 +17,7 @@ public class TodoService {
         return repo.findAll();
     }
 
-    public Todo findById(Long id) {
+    public Todo findById(Integer id) {
         return repo.findById(id)
                    .orElseThrow(() -> new RuntimeException("Todo not found"));
     }
@@ -26,7 +26,7 @@ public class TodoService {
         return repo.save(todo);
     }
 
-    public Todo update(Long id, Todo dto) {
+    public Todo update(Integer id, Todo dto) {
         Todo existing = findById(id);
         existing.setTitle(dto.getTitle());
         existing.setDescription(dto.getDescription());
@@ -34,7 +34,7 @@ public class TodoService {
         return repo.save(existing);
     }
 
-    public void delete(Long id) {
+    public void delete(Integer id) {
         repo.deleteById(id);
     }
 }

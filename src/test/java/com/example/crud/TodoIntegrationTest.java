@@ -55,7 +55,7 @@ class TodoIntegrationTest {
         assertThat(created.getId()).isPositive();
         assertThat(created.getTitle()).isEqualTo("Write tests");
 
-        Long id = created.getId();
+        Integer id = created.getId();
 
         // --- READ ALL
         ResponseEntity<Todo[]> listResponse = restTemplate.getForEntity(
